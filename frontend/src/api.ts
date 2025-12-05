@@ -1,6 +1,6 @@
 import { Task, TaskFormData } from './types';
 
-const API_BASE = '/tasks';
+const API_BASE = import.meta.env.VITE_API_URL || '/tasks';
 
 export const fetchTasks = async (): Promise<Task[]> => {
   const response = await fetch(API_BASE);
