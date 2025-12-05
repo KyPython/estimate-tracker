@@ -2,6 +2,8 @@
 
 A full-stack web application for tracking time estimates versus actual time spent on tasks, helping developers improve their estimation accuracy over time.
 
+**Repository**: https://github.com/KyPython/estimate-tracker
+
 ## Overview
 
 Estimate Tracker allows you to:
@@ -156,6 +158,25 @@ This application directly supports principle #3 by providing a tool to track est
 - Learn which types of tasks they consistently over- or under-estimate
 - Improve future estimates based on historical data
 - Build estimation skills through practice and reflection
+
+## Deployment
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
+
+### Quick Deploy
+
+**Backend (Railway)**:
+1. Visit https://railway.app
+2. Create new project → Deploy from GitHub repo
+3. Select `backend` folder as root
+4. Deploy
+
+**Frontend (Vercel)**:
+1. Visit https://vercel.com
+2. Import GitHub repository
+3. Set root directory to `frontend`
+4. Add environment variable: `VITE_API_URL` = your backend URL
+5. Deploy
 
 ## License
 
