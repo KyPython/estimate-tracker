@@ -163,20 +163,23 @@ This application directly supports principle #3 by providing a tool to track est
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
-### Quick Deploy
+### Quick Deploy (Render)
 
-**Backend (Railway)**:
-1. Visit https://railway.app
-2. Create new project → Deploy from GitHub repo
-3. Select `backend` folder as root
-4. Deploy
+**Backend**:
+1. Visit https://render.com
+2. Create new Web Service → Connect GitHub repo
+3. Set root directory to `backend`
+4. Build: `npm install && npm run build`
+5. Start: `npm start`
+6. Deploy and copy the backend URL
 
-**Frontend (Vercel)**:
-1. Visit https://vercel.com
-2. Import GitHub repository
-3. Set root directory to `frontend`
-4. Add environment variable: `VITE_API_URL` = your backend URL
-5. Deploy
+**Frontend**:
+1. In Render, create new Static Site
+2. Connect GitHub repo, set root to `frontend`
+3. Build: `npm install && npm run build`
+4. Publish directory: `dist`
+5. Add env var: `VITE_API_URL` = your backend URL
+6. Deploy
 
 ## License
 

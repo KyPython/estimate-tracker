@@ -1,61 +1,59 @@
 # Deployment Guide
 
-This guide explains how to deploy the Estimate Tracker application to production.
+This guide explains how to deploy the Estimate Tracker application to production using Render.
 
 ## Architecture
 
-- **Backend**: Node.js/Express API (deploy to Railway, Render, or Fly.io)
-- **Frontend**: React SPA (deploy to Vercel or Netlify)
+- **Backend**: Node.js/Express API (deploy to Render)
+- **Frontend**: React SPA (deploy to Render Static Site)
 
-## Backend Deployment (Railway)
+## Backend Deployment (Render)
 
-1. **Create Railway account** at https://railway.app
-2. **Create new project** and connect your GitHub repository
-3. **Select the backend folder** as the root directory
-4. **Set environment variables** (if needed):
-   - `PORT` (optional, defaults to 3001)
-5. **Deploy** - Railway will automatically detect Node.js and deploy
-
-### Alternative: Render
-
-1. Create account at https://render.com
-2. Create new Web Service
-3. Connect GitHub repository
-4. Set:
+1. **Create Render account** at https://render.com (or sign in with GitHub)
+2. **Create new Web Service**:
+   - Click "New +" → "Web Service"
+   - Connect your GitHub repository: `KyPython/estimate-tracker`
+3. **Configure the service**:
+   - **Name**: `estimate-tracker-backend`
    - **Root Directory**: `backend`
+   - **Environment**: `Node`
    - **Build Command**: `npm install && npm run build`
    - **Start Command**: `npm start`
-   - **Environment**: Node
+4. **Environment Variables** (optional):
+   - `NODE_ENV`: `production`
+   - `PORT`: Render sets this automatically (defaults to 10000)
+5. **Click "Create Web Service"** - Render will deploy automatically
+6. **Copy your service URL** (e.g., `https://estimate-tracker-backend.onrender.com`)
 
-## Frontend Deployment (Vercel)
+**Note**: Render uses the `render.yaml` file in the backend directory for configuration, or you can configure manually in the dashboard.
 
-1. **Create Vercel account** at https://vercel.com
-2. **Import your GitHub repository**
-3. **Configure project**:
+## Frontend Deployment (Render Static Site)
+
+1. **In Render dashboard**, click "New +" → "Static Site"
+2. **Connect your GitHub repository**: `KyPython/estimate-tracker`
+3. **Configure the site**:
+   - **Name**: `estimate-tracker-frontend`
    - **Root Directory**: `frontend`
-   - **Framework Preset**: Vite
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
+   - **Build Command**: `npm install && npm run build`
+   - **Publish Directory**: `dist`
 4. **Add Environment Variable**:
-   - `VITE_API_URL`: Your backend URL (e.g., `https://your-app.railway.app`)
-5. **Deploy**
+   - **Key**: `VITE_API_URL`
+   - **Value**: Your backend URL from step above (e.g., `https://estimate-tracker-backend.onrender.com`)
+5. **Click "Create Static Site"** - Render will deploy automatically
+6. **Your app will be live** at `https://estimate-tracker-frontend.onrender.com`
 
-### Alternative: Netlify
-
-1. Create account at https://netlify.com
-2. Import GitHub repository
-3. Set:
-   - **Base directory**: `frontend`
-   - **Build command**: `npm run build`
-   - **Publish directory**: `frontend/dist`
-4. Add environment variable:
-   - `VITE_API_URL`: Your backend URL
+**Note**: After deployment, Render may show a "Free tier" notice. The site will spin down after inactivity but will wake up on first request.
 
 ## Post-Deployment
 
-1. Update `frontend/vercel.json` with your actual backend URL
-2. Update CORS settings in `backend/src/index.ts` if needed to allow your frontend domain
-3. Test the deployed application
+1. **Update CORS settings** in `backend/src/index.ts` if needed to allow your frontend domain:
+   ```typescript
+   app.use(cors({
+     origin: process.env.FRONTEND_URL || 'http://localhost:3000'
+   }));
+   ```
+2. **Test the deployed application** - visit your frontend URL
+3. **Verify API connection** - check browser console for any CORS errors
 
 ## Database
 
